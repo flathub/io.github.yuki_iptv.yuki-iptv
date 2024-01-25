@@ -19,6 +19,13 @@ finish-args:
   - --talk-name=org.gnome.SessionManager
 cleanup-commands:
   - /app/cleanup-BaseApp.sh
+cleanup:
+  - '*.a'
+  - '*.la'
+  - /include
+  - /lib/cmake
+  - /lib/pkgconfig
+  - /share/man
 modules:
 
   - libmpv.yml
