@@ -16,7 +16,7 @@ finish-args:
   - --device=dri
   #  mpris support via dbus
   - --own-name=org.mpris.MediaPlayer2.yuki_iptv.*
-  - --talk-name=org.gnome.SessionManager  
+  - --talk-name=org.gnome.SessionManager
 cleanup-commands:
   - /app/cleanup-BaseApp.sh
 modules:
@@ -33,8 +33,8 @@ modules:
       - --with-threads
     sources:
       - type: archive
-        url: https://github.com/ImageMagick/ImageMagick/archive/7.1.1-26.tar.gz
-        sha256: ac21f65936a1fd1a073ebd0e653c6d133c43cc02d77977480f70c89856b1241b
+        url: https://github.com/ImageMagick/ImageMagick/archive/7.1.1-27.tar.gz
+        sha256: 51114819ebed50b9f62403b6f7618ec3251dcaea1b1f5893728fbee02ceb3cfa
         x-checker-data:
           type: anitya
           project-id: 1372
@@ -42,7 +42,7 @@ modules:
           url-template: https://github.com/ImageMagick/ImageMagick/archive/$version.tar.gz
     cleanup:
       - /bin/*-config
-      
+
 
   - name: yt-dlp
     no-autogen: true
@@ -67,15 +67,15 @@ modules:
     build-commands:
       - ar -x yuki-iptv.deb
       - tar -xvf data.tar.xz
-     
+
       # fix for later dir copy error: cannot overwrite non-directory with directory
       - mv usr/share/locale/pt_BR/LC_MESSAGES/yuki-iptv.mo /app/share/locale/pt_BR/LC_MESSAGES/
       - rm -rf usr/share/locale/pt_BR
 
       - cp -r usr/* /app/
       - rm -rf usr
-      
-      - install -Dm755 run.sh /app/bin/run.sh   
+
+      - install -Dm755 run.sh /app/bin/run.sh
     sources:
       - type: file
         url: https://github.com/yuki-iptv/yuki-iptv/releases/download/0.0.9/yuki-iptv_0.0.9_all.deb
