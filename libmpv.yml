@@ -162,6 +162,7 @@ modules:
       - --enable-gpl
       - --enable-version3
       - --enable-encoder=png,libwebp,libjxl,libx264,libvorbis
+      - --enable-libxml2
       - --enable-libv4l2
       - --enable-libdav1d
       - --enable-libfontconfig
