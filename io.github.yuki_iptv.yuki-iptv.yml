@@ -21,7 +21,6 @@ cleanup-commands:
   - /app/cleanup-BaseApp.sh
 cleanup:
   - '*.a'
-  - '*.la'
   - /include
   - /lib/cmake
   - /lib/pkgconfig
@@ -34,7 +33,7 @@ modules:
   - name: imagemagick
     config-opts:
       - --enable-shared
-      - --disable-static
+      - --enable-static
       - --disable-docs
       - --with-modules
       - --with-threads
