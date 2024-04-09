@@ -126,8 +126,8 @@ modules:
       - PREFIX=/app
     sources:
       - type: archive
-        url: https://github.com/FFmpeg/nv-codec-headers/archive/refs/tags/n12.1.14.0.tar.gz
-        sha256: 2fefaa227d2a3b4170797796425a59d1dd2ed5fd231db9b4244468ba327acd0b
+        url: https://github.com/FFmpeg/nv-codec-headers/archive/refs/tags/n12.2.72.0.tar.gz
+        sha256: dbeaec433d93b850714760282f1d0992b1254fc3b5a6cb7d76fc1340a1e47563
         x-checker-data:
           type: anitya
           project-id: 223796
@@ -178,8 +178,8 @@ modules:
 
     sources:
       - type: archive
-        url: https://ffmpeg.org/releases/ffmpeg-6.1.1.tar.gz
-        sha256: b0aee531e4a91fed6bc031445dfc3ad8eb36de1fcb0fa2acdb589ecc9f8dc9cb
+        url: https://ffmpeg.org/releases/ffmpeg-7.0.tar.gz
+        sha256: 943a2a28044947c17a905c39075494b0da46ec0795224c2c61eff986518321eb
         x-checker-data:
           type: anitya
           project-id: 5405
