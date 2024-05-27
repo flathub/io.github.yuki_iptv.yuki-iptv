@@ -39,8 +39,8 @@ modules:
       - --with-threads
     sources:
       - type: archive
-        url: https://github.com/ImageMagick/ImageMagick/archive/7.1.1-32.tar.gz
-        sha256: fda0c1a5fdf511721893014370a6303413c70e0c11f2b543a7a4aff36f8c6e92
+        url: https://github.com/ImageMagick/ImageMagick/archive/7.1.1-33.tar.gz
+        sha256: 3fe527ce04ee5485dc6f7726eccd05c962add5c5d91843c5abf6c608e4f55330
         x-checker-data:
           type: anitya
           project-id: 1372
@@ -60,8 +60,8 @@ modules:
       - install yt-dlp /app/bin
     sources:
       - type: archive
-        url: https://github.com/yt-dlp/yt-dlp/archive/refs/tags/2024.04.09.tar.gz
-        sha256: fa2a21946b886f914ccc5ee18a9dc41b628745a51e04d136c6baec06ed4bded6
+        url: https://github.com/yt-dlp/yt-dlp/archive/refs/tags/2024.05.26.tar.gz
+        sha256: 8daf63bd8c63970d8f49d67a539da2e6f3628c3006e8daf53276b96790384b40
         x-checker-data:
           type: anitya
           project-id: 143399
