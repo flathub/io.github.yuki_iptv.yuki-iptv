@@ -85,9 +85,9 @@ modules:
       - install -Dm755 run.sh /app/bin/run.sh
     sources:
       - type: file
-        url: https://codeberg.org/liya/yuki-iptv/releases/download/0.0.15/yuki-iptv_0.0.15_all.deb
+        url: https://codeberg.org/liya/yuki-iptv/releases/download/0.0.16/yuki-iptv_0.0.16_all.deb
         dest-filename: yuki-iptv.deb
-        sha256: 8f19b16dd81f7b84ee897ef205c6dfd69c02a29b0b95a621b4c84bc21023d171
+        sha256: 5ad7d361122ee60f4e8ae4485ddbaf66219b79cea8910be94404796211f062e9
 
       - type: script
         commands:
