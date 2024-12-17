@@ -17,6 +17,8 @@ finish-args:
   #  mpris support via dbus
   - --own-name=org.mpris.MediaPlayer2.yuki_iptv.*
   - --talk-name=org.gnome.SessionManager
+  # screensaver
+  - --talk-name=org.freedesktop.ScreenSaver
 cleanup-commands:
   - /app/cleanup-BaseApp.sh
 cleanup:
