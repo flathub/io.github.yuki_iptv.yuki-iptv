@@ -1,1 +1,1 @@
-flatpak-pip-generator requests chardet wand pycairo PyGObject
+flatpak-pip-generator requests chardet pycairo PyGObject
