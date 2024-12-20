@@ -32,26 +32,6 @@ modules:
   - libmpv.yml
   - python3-modules.json
 
-  - name: imagemagick
-    config-opts:
-      - --enable-shared
-      - --enable-static
-      - --disable-docs
-      - --with-modules
-      - --with-threads
-    sources:
-      - type: archive
-        url: https://github.com/ImageMagick/ImageMagick/archive/7.1.1-41.tar.gz
-        sha256: cabf2516dce66da56dd4e3071453b808eefaf4326a93292d2a222a4ea623d601
-        x-checker-data:
-          type: anitya
-          project-id: 1372
-          stable-only: true
-          url-template: https://github.com/ImageMagick/ImageMagick/archive/$version.tar.gz
-    cleanup:
-      - /bin/*-config
-
-
   - name: yt-dlp
     no-autogen: true
     no-make-install: true
