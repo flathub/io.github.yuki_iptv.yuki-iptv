@@ -62,31 +62,31 @@ modules:
           - /lib/cmake
         sources:
           - type: archive
-            url: https://github.com/KhronosGroup/glslang/archive/15.0.0.tar.gz
-            sha256: c31c8c2e89af907507c0631273989526ee7d5cdf7df95ececd628fd7b811e064
+            url: https://github.com/KhronosGroup/glslang/archive/15.1.0.tar.gz
+            sha256: 4bdcd8cdb330313f0d4deed7be527b0ac1c115ff272e492853a6e98add61b4bc
             x-checker-data:
               type: anitya
               project-id: 205796
               stable-only: true
               url-template: https://github.com/KhronosGroup/glslang/archive/$version.tar.gz
           - type: archive
-            url: https://github.com/KhronosGroup/SPIRV-Tools/archive/refs/tags/sdk-1.3.261.1.tar.gz
-            sha256: ead95c626ad482882a141d1aa0ce47b9453871f72c42c0b28d39c82f60a52008
+            url: https://github.com/KhronosGroup/SPIRV-Tools/archive/refs/tags/vulkan-sdk-1.4.304.0.tar.gz
+            sha256: ad6e8922538c498e7131bcd82a8d6d9f9863b8d7431c5bfa27dd98e26435be07
             dest: External/spirv-tools
             x-checker-data:
               type: anitya
               stable-only: true
               project-id: 334920
-              url-template: https://github.com/KhronosGroup/SPIRV-Tools/archive/refs/tags/sdk-$version.tar.gz
+              url-template: https://github.com/KhronosGroup/SPIRV-Tools/archive/refs/tags/vulkan-sdk-$version.tar.gz
           - type: archive
-            url: https://github.com/KhronosGroup/SPIRV-Headers/archive/refs/tags/sdk-1.3.261.1.tar.gz
-            sha256: 32b4c6ae6a2fa9b56c2c17233c8056da47e331f76e117729925825ea3e77a739
+            url: https://github.com/KhronosGroup/SPIRV-Headers/archive/refs/tags/vulkan-sdk-1.4.304.0.tar.gz
+            sha256: 162b864ebaf339d66953fc2c4ad974bc4f453e0f04155cd3755a85e33f408eee
             dest: External/spirv-tools/external/spirv-headers
             x-checker-data:
               type: anitya
               stable-only: true
               project-id: 334920
-              url-template: https://github.com/KhronosGroup/SPIRV-Headers/archive/refs/tags/sdk-$version.tar.gz
+              url-template: https://github.com/KhronosGroup/SPIRV-Headers/archive/refs/tags/vulkan-sdk-$version.tar.gz
 
   - name: libXpresent
     buildsystem: autotools
