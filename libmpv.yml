@@ -15,8 +15,8 @@ config-opts:
   - -Dmanpage-build=disabled
 sources:
   - type: archive
-    url: https://github.com/mpv-player/mpv/archive/refs/tags/v0.39.0.tar.gz
-    sha256: 2ca92437affb62c2b559b4419ea4785c70d023590500e8a52e95ea3ab4554683
+    url: https://github.com/mpv-player/mpv/archive/refs/tags/v0.40.0.tar.gz
+    sha256: 10a0f4654f62140a6dd4d380dcf0bbdbdcf6e697556863dc499c296182f081a3
     x-checker-data:
       type: anitya
       project-id: 5348
@@ -62,8 +62,8 @@ modules:
           - /lib/cmake
         sources:
           - type: archive
-            url: https://github.com/KhronosGroup/glslang/archive/15.2.0.tar.gz
-            sha256: 45e3920d264d5c2cc3bfaec0e5dbb66cffd549255e0aaaf38cd283918e35c8ba
+            url: https://github.com/KhronosGroup/glslang/archive/15.3.0.tar.gz
+            sha256: c6c21fe1873c37e639a6a9ac72d857ab63a5be6893a589f34e09a6c757174201
             x-checker-data:
               type: anitya
               project-id: 205796
