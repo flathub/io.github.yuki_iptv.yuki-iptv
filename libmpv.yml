@@ -32,8 +32,8 @@ modules:
       - -Ddemos=False
     sources:
       - type: archive
-        url: https://code.videolan.org/videolan/libplacebo/-/archive/v7.349.0/libplacebo-v7.349.0.tar.gz
-        sha256: 79120e685a1836344b51b13b6a5661622486a84e4d4a35f6c8d01679a20fbc86
+        url: https://code.videolan.org/videolan/libplacebo/-/archive/v7.351.0/libplacebo-v7.351.0.tar.gz
+        sha256: 4efe1c8d4da3c61295eb5fdfa50e6037409d8425eb3c15dd86788679c4ce59ee
         x-checker-data:
           type: anitya
           project-id: 20101
@@ -62,8 +62,8 @@ modules:
           - /lib/cmake
         sources:
           - type: archive
-            url: https://github.com/KhronosGroup/glslang/archive/15.3.0.tar.gz
-            sha256: c6c21fe1873c37e639a6a9ac72d857ab63a5be6893a589f34e09a6c757174201
+            url: https://github.com/KhronosGroup/glslang/archive/15.4.0.tar.gz
+            sha256: b16c78e7604b9be9f546ee35ad8b6db6f39bbbbfb19e8d038b6fe2ea5bba4ff4
             x-checker-data:
               type: anitya
               project-id: 205796
