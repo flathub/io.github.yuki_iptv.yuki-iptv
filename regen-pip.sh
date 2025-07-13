@@ -1,1 +1,2 @@
-flatpak-pip-generator evdev requests chardet pycairo PyGObject
+#!/usr/bin/env bash
+python3 -m flatpak_pip_generator -r requirements.txt
