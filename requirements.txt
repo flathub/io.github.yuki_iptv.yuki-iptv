@@ -1,0 +1,5 @@
+evdev
+chardet
+pycairo
+requests
+PyGObject
