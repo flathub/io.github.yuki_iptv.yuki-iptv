@@ -72,8 +72,8 @@ modules:
               stable-only: true
               url-template: https://github.com/KhronosGroup/glslang/archive/$version.tar.gz
           - type: archive
-            url: https://github.com/KhronosGroup/SPIRV-Tools/archive/refs/tags/vulkan-sdk-1.4.313.0.tar.gz
-            sha256: 6b60f723345ceed5291cceebbcfacf7fea9361a69332261fa08ae57e2a562005
+            url: https://github.com/KhronosGroup/SPIRV-Tools/archive/refs/tags/vulkan-sdk-1.4.321.0.tar.gz
+            sha256: 8327fb8f3e9472346a004c91dbb83a6e5f3b36c3846c142cf8c0dc8fac8710f3
             dest: External/spirv-tools
             x-checker-data:
               type: anitya
@@ -81,8 +81,8 @@ modules:
               project-id: 334920
               url-template: https://github.com/KhronosGroup/SPIRV-Tools/archive/refs/tags/vulkan-sdk-$version.tar.gz
           - type: archive
-            url: https://github.com/KhronosGroup/SPIRV-Headers/archive/refs/tags/vulkan-sdk-1.4.313.0.tar.gz
-            sha256: f68be549d74afb61600a1e3a7d1da1e6b7437758c8e77d664909f88f302c5ac1
+            url: https://github.com/KhronosGroup/SPIRV-Headers/archive/refs/tags/vulkan-sdk-1.4.321.0.tar.gz
+            sha256: 5bbea925663d4cd2bab23efad53874f2718248a73dcaf9dd21dff8cb48e602fc
             dest: External/spirv-tools/external/spirv-headers
             x-checker-data:
               type: anitya
@@ -220,8 +220,8 @@ modules:
               - -DBUILD_SHARED_LIBS=ON
             sources:
               - type: archive
-                url: https://github.com/google/highway/archive/refs/tags/1.2.0.tar.gz
-                sha256: 7e0be78b8318e8bdbf6fa545d2ecb4c90f947df03f7aadc42c1967f019e63343
+                url: https://github.com/google/highway/archive/refs/tags/1.3.0.tar.gz
+                sha256: 07b3c1ba2c1096878a85a31a5b9b3757427af963b1141ca904db2f9f4afe0bc2
                 x-checker-data:
                   type: anitya
                   project-id: 205809
