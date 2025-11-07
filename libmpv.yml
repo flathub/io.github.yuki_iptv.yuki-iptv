@@ -8,11 +8,16 @@ cleanup:
 buildsystem: meson
 config-opts:
   - -Dlibmpv=true
+  - -Dcplayer=false
   - -Dlua=enabled
   - -Ddebug=false
   - -Dbuild-date=false
   - -Dalsa=disabled
   - -Dmanpage-build=disabled
+  - -Dvulkan=enabled
+  - -Dx11=enabled
+  - -Dwayland=enabled
+  - -Ddrm=enabled
 sources:
   - type: archive
     url: https://github.com/mpv-player/mpv/archive/refs/tags/v0.40.0.tar.gz
@@ -22,210 +27,127 @@ sources:
       project-id: 5348
       stable-only: true
       url-template: https://github.com/mpv-player/mpv/archive/refs/tags/v$version.tar.gz
+  - type: patch
+    path: fix-hwdec.diff
 modules:
   - shared-modules/luajit/luajit.json
-
+  
+  - name: vapoursynth
+    config-opts:
+      - --with-python-prefix=/app
+  
+    sources:
+      - type: archive
+        url: https://github.com/vapoursynth/vapoursynth/archive/72.tar.gz
+        sha256: f8fcc5e2e9d2195454310e3356ea13e5334125891e452cc6543e985f28cacd22
+        x-checker-data:
+          type: anitya
+          project-id: 15982
+          stable-only: true
+          url-template: https://github.com/vapoursynth/vapoursynth/archive/$version.tar.gz
+    modules:
+      - name: zimg
+        config-opts:
+          - --disable-static
+        cleanup:
+          - /include
+          - /lib/pkgconfig
+          - /share/doc
+        sources:
+          - type: archive
+            archive-type: tar
+            url: https://api.github.com/repos/sekrit-twc/zimg/tarball/release-3.0.6
+            sha256: 15140e491c4ce9db5f02a038d8a1eb53e9151b55eeed06a2899425a6ebfef367
+            x-checker-data:
+              type: json
+              url: https://api.github.com/repos/sekrit-twc/zimg/releases/latest
+              url-query: .tarball_url
+              version-query: .tag_name | sub("^release-"; "")
+              timestamp-query: .published_at
+  
   - name: libplacebo
     buildsystem: meson
     config-opts:
+      - -Dopengl=enabled
+      - -Dvulkan=enabled
+      - -Dglslang=disabled
       - -Dd3d11=disabled
-      - -Ddemos=False
+      - -Ddemos=false
+    cleanup:
+      - /include
+      - /lib/pkgconfig
     sources:
-      - type: archive
-        url: https://code.videolan.org/videolan/libplacebo/-/archive/v7.351.0/libplacebo-v7.351.0.tar.gz
-        sha256: 4efe1c8d4da3c61295eb5fdfa50e6037409d8425eb3c15dd86788679c4ce59ee
+      - type: git
+        url: https://github.com/haasn/libplacebo.git
+        tag: v7.351.0
+        commit: 3188549fba13bbdf3a5a98de2a38c2e71f04e21e
         x-checker-data:
-          type: anitya
-          project-id: 20101
-          stable-only: true
-          url-template: https://code.videolan.org/videolan/libplacebo/-/archive/v$version/libplacebo-v$version.tar.gz
-      - type: archive
-        url: https://github.com/pallets/markupsafe/archive/refs/tags/2.1.3.tar.gz
-        sha256: b209e55e953eabf4bc31e0c9f3182af03b40e5bf5afed652f72b9b7ac02c0b30
-        dest: 3rdparty/markupsafe
-      - type: archive
-        url: https://github.com/pallets/jinja/archive/refs/tags/3.1.2.tar.gz
-        sha256: ecae76cd1a064d40eb46c5375f07953d747f4d65b68cd3fa5f02c91714b799fc
-        dest: 3rdparty/jinja
-      - type: archive
-        url: https://github.com/Dav1dde/glad/archive/refs/tags/v2.0.4.tar.gz
-        sha256: 02629644c242dcc27c58222bd2c001d5e2f3765dbbcfd796542308bddebab401
-        dest: 3rdparty/glad
+          type: git
+          tag-pattern: ^v([\d.]+)$
+      - type: patch
+        path: libplacebo-python-3.14.patch    
     modules:
-      - name: glslang
+      # runtime shaderc is broken for mpv build.
+      # OSError: /usr/lib/x86_64-linux-gnu/libshaderc_shared.so.1: undefined symbol: _ZTVN8spvtools5utils5TimerE
+      - name: shaderc
         buildsystem: cmake-ninja
+        builddir: true
         config-opts:
-          - -DBUILD_SHARED_LIBS=ON
+          - -DSHADERC_SKIP_COPYRIGHT_CHECK=ON
+          - -DSHADERC_SKIP_EXAMPLES=ON
+          - -DSHADERC_SKIP_TESTS=ON
+          - -DSPIRV_SKIP_EXECUTABLES=ON
+          - -DENABLE_GLSLANG_BINARIES=OFF
         cleanup:
           - /bin
           - /include
           - /lib/cmake
+          - /lib/pkgconfig
         sources:
-          - type: archive
-            url: https://github.com/KhronosGroup/glslang/archive/15.4.0.tar.gz
-            sha256: b16c78e7604b9be9f546ee35ad8b6db6f39bbbbfb19e8d038b6fe2ea5bba4ff4
+          - type: git
+            url: https://github.com/google/shaderc.git
+            tag: v2025.4
+            commit: 73743588fe9c39f2f1c780a087d94afac691a189
             x-checker-data:
-              type: anitya
-              project-id: 205796
-              stable-only: true
-              url-template: https://github.com/KhronosGroup/glslang/archive/$version.tar.gz
-          - type: archive
-            url: https://github.com/KhronosGroup/SPIRV-Tools/archive/refs/tags/vulkan-sdk-1.4.313.0.tar.gz
-            sha256: 6b60f723345ceed5291cceebbcfacf7fea9361a69332261fa08ae57e2a562005
-            dest: External/spirv-tools
+              type: git
+              tag-pattern: ^v(\d{4}\.\d{1,2})$
+          - type: git
+            url: https://github.com/KhronosGroup/SPIRV-Headers.git
+            tag: vulkan-sdk-1.4.328.1
+            commit: 01e0577914a75a2569c846778c2f93aa8e6feddd
+            dest: third_party/spirv-headers
             x-checker-data:
-              type: anitya
-              stable-only: true
-              project-id: 334920
-              url-template: https://github.com/KhronosGroup/SPIRV-Tools/archive/refs/tags/vulkan-sdk-$version.tar.gz
-          - type: archive
-            url: https://github.com/KhronosGroup/SPIRV-Headers/archive/refs/tags/vulkan-sdk-1.4.313.0.tar.gz
-            sha256: f68be549d74afb61600a1e3a7d1da1e6b7437758c8e77d664909f88f302c5ac1
-            dest: External/spirv-tools/external/spirv-headers
+              type: git
+              tag-pattern: ^vulkan-sdk-([\d.]+)$
+          - type: git
+            url: https://github.com/KhronosGroup/SPIRV-Tools.git
+            tag: vulkan-sdk-1.4.328.1
+            commit: 7f2d9ee926f98fc77a3ed1e1e0f113b8c9c49458
+            dest: third_party/spirv-tools
             x-checker-data:
-              type: anitya
-              stable-only: true
-              project-id: 334920
-              url-template: https://github.com/KhronosGroup/SPIRV-Headers/archive/refs/tags/vulkan-sdk-$version.tar.gz
+              type: git
+              tag-pattern: ^vulkan-sdk-([\d.]+)$
+          - type: git
+            url: https://github.com/KhronosGroup/glslang.git
+            tag: vulkan-sdk-1.4.328.1
+            commit: a57276bf558f5cf94d3a9854ebdf5a2236849a5a
+            dest: third_party/glslang
+            x-checker-data:
+              type: git
+              tag-pattern: ^vulkan-sdk-([\d.]+)$
 
   - name: libXpresent
     buildsystem: autotools
     sources:
       - type: archive
-        url: https://xorg.freedesktop.org/archive/individual/lib/libXpresent-1.0.1.tar.xz
-        sha256: b964df9e5a066daa5e08d2dc82692c57ca27d00b8cc257e8e960c9f1cf26231b
+        url: https://xorg.freedesktop.org/archive/individual/lib/libXpresent-1.0.2.tar.xz
+        sha256: 4e5b21b4812206a4b223013606ae31170502c1043038777a1ef8f70c09d37602
         x-checker-data:
           type: anitya
           project-id: 17166
           stable-only: true
           url-template: https://xorg.freedesktop.org/archive/individual/lib/libXpresent-$version.tar.xz
-
-  - name: libv4l2
-    cleanup:
-      - /sbin
-      - /bin
-    config-opts:
-      - --disable-static
-      - --disable-bpf
-      - --with-udevdir=/app/lib/udev
-    sources:
-      - type: archive
-        url: https://linuxtv.org/downloads/v4l-utils/v4l-utils-1.24.1.tar.bz2
-        sha256: cbb7fe8a6307f5ce533a05cded70bb93c3ba06395ab9b6d007eb53b75d805f5b
-        x-checker-data:
-          type: anitya
-          project-id: 9998
-          stable-only: true
-          url-template: https://linuxtv.org/downloads/v4l-utils/v4l-utils-$version.tar.bz2
-
-  - name: nv-codec-headers
-    cleanup:
-      - '*'
-    no-autogen: true
-    make-install-args:
-      - PREFIX=/app
-    sources:
-      - type: archive
-        url: https://github.com/FFmpeg/nv-codec-headers/archive/refs/tags/n13.0.19.0.tar.gz
-        sha256: 86d15d1a7c0ac73a0eafdfc57bebfeba7da8264595bf531cf4d8db1c22940116
-        x-checker-data:
-          type: anitya
-          project-id: 223796
-          stable-only: true
-          url-template: https://github.com/FFmpeg/nv-codec-headers/archive/refs/tags/n$version.tar.gz
-
-  - name: x264
-    config-opts:
-      - --enable-shared
-      - --enable-pic
-      - --enable-lto
-      - --disable-avs
-      - --disable-lavf
-      - --disable-cli
-      - --disable-ffms
-      - --disable-opencl
-    sources:
-      - type: git
-        url: https://code.videolan.org/videolan/x264.git
-        commit: a8b68ebfaa68621b5ac8907610d3335971839d52
-
-  - name: ffmpeg
-    cleanup:
-      - /share/ffmpeg/examples
-    config-opts:
-      - --disable-debug
-      - --disable-doc
-      - --disable-programs
-      - --disable-static
-      - --enable-shared
-      - --enable-gnutls
-      - --enable-gpl
-      - --enable-version3
-      - --enable-encoder=png,libwebp,libjxl,libx264,libvorbis
-      - --enable-libxml2
-      - --enable-libv4l2
-      - --enable-libdav1d
-      - --enable-libfontconfig
-      - --enable-libfreetype
-      - --enable-libopus
-      - --enable-librsvg
-      - --enable-libvpx
-      - --enable-libmp3lame
-      - --enable-libwebp
-      - --enable-libjxl
-      - --enable-libx264
-      - --enable-libvorbis
-
-    sources:
-      - type: archive
-        url: https://ffmpeg.org/releases/ffmpeg-7.1.1.tar.gz
-        sha256: 9a6e57a446b671012612aaeb9df5126794d5ac8f2015ca220934f99a6a4e0601
-        x-checker-data:
-          type: anitya
-          project-id: 5405
-          stable-only: true
-          url-template: https://ffmpeg.org/releases/ffmpeg-$version.tar.gz
-    modules:
-      - name: libjxl
-        buildsystem: cmake-ninja
-        config-opts:
-          - -DJPEGXL_ENABLE_JPEGLI=OFF
-          - -DBUILD_TESTING=OFF
-          - -DJPEGXL_ENABLE_BENCHMARK=OFF
-          - -DJPEGXL_ENABLE_COVERAGE=OFF
-          - -DJPEGXL_ENABLE_EXAMPLES=OFF
-          - -DJPEGXL_ENABLE_FUZZERS=OFF
-          - -DJPEGXL_ENABLE_JNI=OFF
-          - -DJPEGXL_ENABLE_SJPEG=OFF
-          - -DJPEGXL_ENABLE_SKCMS=OFF
-          - -DJPEGXL_ENABLE_TOOLS=OFF
-          - -DJPEGXL_ENABLE_VIEWERS=OFF
-        sources:
-          - type: archive
-            url: https://github.com/libjxl/libjxl/archive/refs/tags/v0.11.1.tar.gz
-            sha256: 1492dfef8dd6c3036446ac3b340005d92ab92f7d48ee3271b5dac1d36945d3d9
-            x-checker-data:
-              type: anitya
-              project-id: 232764
-              stable-only: true
-              url-template: https://github.com/libjxl/libjxl/archive/refs/tags/v$version.tar.gz
-        modules:
-          - name: highway
-            buildsystem: cmake-ninja
-            config-opts:
-              - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-              - -DBUILD_TESTING=OFF
-              - -DBUILD_SHARED_LIBS=ON
-            sources:
-              - type: archive
-                url: https://github.com/google/highway/archive/refs/tags/1.2.0.tar.gz
-                sha256: 7e0be78b8318e8bdbf6fa545d2ecb4c90f947df03f7aadc42c1967f019e63343
-                x-checker-data:
-                  type: anitya
-                  project-id: 205809
-                  stable-only: true
-                  url-template: https://github.com/google/highway/archive/refs/tags/$version.tar.gz
-
+  
   - name: libass
     config-opts:
       - --disable-static
@@ -238,10 +160,11 @@ modules:
           project-id: 1560
           stable-only: true
           url-template: https://github.com/libass/libass/releases/download/$version/libass-$version.tar.gz
-
+  
   - name: uchardet
     buildsystem: cmake-ninja
     config-opts:
+      - -DCMAKE_POLICY_VERSION_MINIMUM=3.5    
       - -DCMAKE_BUILD_TYPE=Release
       - -DBUILD_STATIC=0
     cleanup:
@@ -255,4 +178,46 @@ modules:
           project-id: 9265
           stable-only: true
           url-template: https://www.freedesktop.org/software/uchardet/releases/uchardet-$version.tar.xz
-
+  
+  # Needed for mpv 0.40 vaapi support
+  - name: libdisplay-info
+    buildsystem: meson
+    sources:
+      - type: archive
+        url: https://gitlab.freedesktop.org/emersion/libdisplay-info/-/archive/0.2.0/libdisplay-info-0.3.0.tar.gz
+        sha256: a0fe86d4b43a6347cdd8192f307d19b81d31401fe55251be0576bdbe0b519d7f
+        x-checker-data:
+          type: anitya
+          project-id: 326668
+          stable-only: true
+          url-template: https://gitlab.freedesktop.org/emersion/libdisplay-info/-/archive/0.2.0/libdisplay-info-$version.tar.gz
+  
+    modules:
+      - name: hwdata
+        sources:
+          - type: archive
+            url: https://github.com/vcrhonek/hwdata/archive/refs/tags/v0.400.tar.gz
+            sha256: 05d96821aaae04be4e684eaf9ac22e08efe646321bc64be323b91b66e7e2095c
+            x-checker-data:
+              type: anitya
+              project-id: 5387
+              stable-only: true
+              url-template: https://github.com/vcrhonek/hwdata/archive/refs/tags/v$version.tar.gz
+  
+  - name: yt-dlp
+    no-autogen: true
+    no-make-install: true
+    make-args:
+      - yt-dlp
+      - PYTHON=/usr/bin/python3
+    post-install:
+      - install yt-dlp /app/bin
+    sources:
+      - type: archive
+        url: https://github.com/yt-dlp/yt-dlp/archive/refs/tags/2025.10.22.tar.gz
+        sha256: ef21d5427e896d46180408dc1feb0da19bf0a97876b0f10b15f6304fa496991c
+        x-checker-data:
+          type: anitya
+          project-id: 143399
+          stable-only: true
+          url-template: https://github.com/yt-dlp/yt-dlp/archive/refs/tags/$version.tar.gz

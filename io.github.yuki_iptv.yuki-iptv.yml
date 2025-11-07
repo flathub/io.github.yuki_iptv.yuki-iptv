@@ -56,9 +56,6 @@ modules:
       - ar -x yuki-iptv.deb
       - tar -xvf data.tar.xz
 
-      # fix for later dir copy error: cannot overwrite non-directory with directory
-      - mv usr/share/locale/pt_BR/LC_MESSAGES/yuki-iptv.mo /app/share/locale/pt_BR/LC_MESSAGES/
-      - rm -rf usr/share/locale/pt_BR
       - rm -rf usr/share/locale/nn
 
       - cp -r usr/* /app/

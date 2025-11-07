@@ -1,5 +1,6 @@
 evdev
 chardet
+meson-python
 pycairo
 requests
 PyGObject
