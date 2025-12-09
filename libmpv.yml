@@ -31,11 +31,11 @@ sources:
     path: fix-hwdec.diff
 modules:
   - shared-modules/luajit/luajit.json
-  
+
   - name: vapoursynth
     config-opts:
       - --with-python-prefix=/app
-  
+
     sources:
       - type: archive
         url: https://github.com/vapoursynth/vapoursynth/archive/72.tar.gz
@@ -64,7 +64,7 @@ modules:
               url-query: .tarball_url
               version-query: .tag_name | sub("^release-"; "")
               timestamp-query: .published_at
-  
+
   - name: libplacebo
     buildsystem: meson
     config-opts:
@@ -85,7 +85,7 @@ modules:
           type: git
           tag-pattern: ^v([\d.]+)$
       - type: patch
-        path: libplacebo-python-3.14.patch    
+        path: libplacebo-python-3.14.patch
     modules:
       # runtime shaderc is broken for mpv build.
       # OSError: /usr/lib/x86_64-linux-gnu/libshaderc_shared.so.1: undefined symbol: _ZTVN8spvtools5utils5TimerE
@@ -106,31 +106,31 @@ modules:
         sources:
           - type: git
             url: https://github.com/google/shaderc.git
-            tag: v2025.4
-            commit: 73743588fe9c39f2f1c780a087d94afac691a189
+            tag: v2025.5
+            commit: c4b0af6c3664cd8b33ffddf452514e02a173b4d6
             x-checker-data:
               type: git
               tag-pattern: ^v(\d{4}\.\d{1,2})$
           - type: git
             url: https://github.com/KhronosGroup/SPIRV-Headers.git
-            tag: vulkan-sdk-1.4.328.1
-            commit: 01e0577914a75a2569c846778c2f93aa8e6feddd
+            tag: vulkan-sdk-1.4.335.0
+            commit: b824a462d4256d720bebb40e78b9eb8f78bbb305
             dest: third_party/spirv-headers
             x-checker-data:
               type: git
               tag-pattern: ^vulkan-sdk-([\d.]+)$
           - type: git
             url: https://github.com/KhronosGroup/SPIRV-Tools.git
-            tag: vulkan-sdk-1.4.328.1
-            commit: 7f2d9ee926f98fc77a3ed1e1e0f113b8c9c49458
+            tag: vulkan-sdk-1.4.335.0
+            commit: 262bdab48146c937467f826699a40da0fdfc0f1a
             dest: third_party/spirv-tools
             x-checker-data:
               type: git
               tag-pattern: ^vulkan-sdk-([\d.]+)$
           - type: git
             url: https://github.com/KhronosGroup/glslang.git
-            tag: vulkan-sdk-1.4.328.1
-            commit: a57276bf558f5cf94d3a9854ebdf5a2236849a5a
+            tag: vulkan-sdk-1.4.335.0
+            commit: b5782e52ee2f7b3e40bb9c80d15b47016e008bc9
             dest: third_party/glslang
             x-checker-data:
               type: git
@@ -147,7 +147,7 @@ modules:
           project-id: 17166
           stable-only: true
           url-template: https://xorg.freedesktop.org/archive/individual/lib/libXpresent-$version.tar.xz
-  
+
   - name: libass
     config-opts:
       - --disable-static
@@ -160,11 +160,11 @@ modules:
           project-id: 1560
           stable-only: true
           url-template: https://github.com/libass/libass/releases/download/$version/libass-$version.tar.gz
-  
+
   - name: uchardet
     buildsystem: cmake-ninja
     config-opts:
-      - -DCMAKE_POLICY_VERSION_MINIMUM=3.5    
+      - -DCMAKE_POLICY_VERSION_MINIMUM=3.5
       - -DCMAKE_BUILD_TYPE=Release
       - -DBUILD_STATIC=0
     cleanup:
@@ -178,7 +178,7 @@ modules:
           project-id: 9265
           stable-only: true
           url-template: https://www.freedesktop.org/software/uchardet/releases/uchardet-$version.tar.xz
-  
+
   # Needed for mpv 0.40 vaapi support
   - name: libdisplay-info
     buildsystem: meson
@@ -191,19 +191,19 @@ modules:
           project-id: 326668
           stable-only: true
           url-template: https://gitlab.freedesktop.org/emersion/libdisplay-info/-/archive/0.2.0/libdisplay-info-$version.tar.gz
-  
+
     modules:
       - name: hwdata
         sources:
           - type: archive
-            url: https://github.com/vcrhonek/hwdata/archive/refs/tags/v0.400.tar.gz
-            sha256: 05d96821aaae04be4e684eaf9ac22e08efe646321bc64be323b91b66e7e2095c
+            url: https://github.com/vcrhonek/hwdata/archive/refs/tags/v0.402.tar.gz
+            sha256: e390fe2f5f5ef7ed9ccbe62eb7cd40d4ee2b57389e7869c0dc96433c81812e7a
             x-checker-data:
               type: anitya
               project-id: 5387
               stable-only: true
               url-template: https://github.com/vcrhonek/hwdata/archive/refs/tags/v$version.tar.gz
-  
+
   - name: yt-dlp
     no-autogen: true
     no-make-install: true
@@ -214,8 +214,8 @@ modules:
       - install yt-dlp /app/bin
     sources:
       - type: archive
-        url: https://github.com/yt-dlp/yt-dlp/archive/refs/tags/2025.10.22.tar.gz
-        sha256: ef21d5427e896d46180408dc1feb0da19bf0a97876b0f10b15f6304fa496991c
+        url: https://github.com/yt-dlp/yt-dlp/archive/refs/tags/2025.12.08.tar.gz
+        sha256: 10bec5b2bfb367263e7e46ddb69187204506f9d67b7f01bb499d07fa0d54d4b7
         x-checker-data:
           type: anitya
           project-id: 143399
